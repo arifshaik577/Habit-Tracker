@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Habit Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0b1329" />
+</head>
+<body>
+  <div class="container">
+    <header class="app-header">
+      <div class="header-content">
+        <h1>Habit Tracker</h1>
+        <p class="subtitle">Build consistency, one day at a time.</p>
+      </div>
+      <div class="stats-overview">
+        <div class="stat-badge">
+          <span class="stat-number" id="activeHabitsCount">0</span>
+          <span class="stat-label">Active Habits</span>
+        </div>
+        <div class="stat-badge">
+          <span class="stat-number" id="completionRate">0%</span>
+          <span class="stat-label">Today's Progress</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Habit Creator Form -->
+    <section class="card form-card">
+      <form id="habitForm">
+        <input 
+          type="text" 
+          id="habitInput" 
+          placeholder="e.g., Read for 20 minutes, Drink 2L water..." 
+          required 
+          autocomplete="off"
+        />
+        <select id="habitCategory">
+          <option value="Health">🧘 Health</option>
+          <option value="Productivity">⚡ Productivity</option>
+          <option value="Fitness">💪 Fitness</option>
+          <option value="Mindset">🧠 Mindset</option>
+        </select>
+        <button type="submit" class="btn primary-btn">+ Add Habit</button>
+      </form>
+    </section>
+
+    <!-- Weekly Matrix -->
+    <section class="card list-card">
+      <div class="table-header">
+        <div class="col-info">Habit & Streak</div>
+        <div class="col-days" id="weekHeaderLabels"></div>
+        <div class="col-actions">Action</div>
+      </div>
+      <div id="habitsContainer" class="habits-list"></div>
+    </section>
+
+    <!-- Daily & Monthly Progress Doughnut Charts -->
+    <section class="card charts-card">
+      <div class="charts-header">
+        <h3>Progress Overview</h3>
+        <span class="chart-subtitle">Daily completion & past 30 days overall success rate</span>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-box pie-box">
+          <h4>Daily Progress</h4>
+          <div class="canvas-wrapper">
+            <canvas id="dailyPieChart"></canvas>
+            <div id="dailyPercentText" class="chart-center-text">0%</div>
+          </div>
+        </div>
+        <div class="chart-box pie-box">
+          <h4>Monthly Progress (30 Days)</h4>
+          <div class="canvas-wrapper">
+            <canvas id="monthlyPieChart"></canvas>
+            <div id="monthlyPercentText" class="chart-center-text">0%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Yearly History (Month-by-Month Explorer) -->
+    <section class="card history-card">
+      <div class="history-header">
+        <div>
+          <h3>Yearly History</h3>
+          <span class="chart-subtitle">Explore habits month-by-month across the entire year</span>
+        </div>
+        <div class="month-selector-group">
+          <select id="historyYearSelect"></select>
+          <select id="historyMonthSelect"></select>
+        </div>
+      </div>
+
+      <div class="month-summary-grid">
+        <div class="month-stat-box">
+          <span class="month-stat-val" id="monthCompletionsCount">0</span>
+          <span class="month-stat-label">Completions</span>
+        </div>
+        <div class="month-stat-box">
+          <span class="month-stat-val" id="monthSuccessRate">0%</span>
+          <span class="month-stat-label">Monthly Rate</span>
+        </div>
+        <div class="month-stat-box">
+          <span class="month-stat-val" id="monthActiveDays">0</span>
+          <span class="month-stat-label">Days Active</span>
+        </div>
+      </div>
+
+      <div class="calendar-wrapper">
+        <div class="calendar-days-header">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div id="calendarGrid" class="calendar-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CDN Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
